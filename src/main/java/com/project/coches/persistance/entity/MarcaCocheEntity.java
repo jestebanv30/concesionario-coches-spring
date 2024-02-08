@@ -13,7 +13,8 @@ import lombok.Setter;
 public class MarcaCocheEntity {
 
     /**
-     * Atributos de marca coche
+     * Atributos de marca coche, en ID se genera
+     * automático
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
