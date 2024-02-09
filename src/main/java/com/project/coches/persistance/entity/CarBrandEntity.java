@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Table(name = "marca_coche")
-public class MarcaCocheEntity {
+public class CarBrandEntity {
 
     /**
      * Atributos de marca coche, en ID se genera
