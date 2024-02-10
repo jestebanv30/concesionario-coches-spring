@@ -14,6 +14,10 @@ import java.util.Optional;
 @Repository
 public class CarBrandRepository implements ICarBrandRepository {
 
+    /**
+     * variables de instancia de la interfaz ICarBrandCrudRepository (BD)
+     * y ICarBrandMapper (Mapeador)
+     */
     private final ICarBrandCrudRepository iCarBrandCrudRepository;
 
     private final ICarBrandMapper iCarBrandMapper;
@@ -27,14 +31,16 @@ public class CarBrandRepository implements ICarBrandRepository {
         return iCarBrandMapper.toMarcasCochePojo(iCarBrandCrudRepository.findAll());
     }
 
+    /**
+     * Busca una marca coche Entity y la transformo en Pojo
+     * @param id Marca de coche a buscar
+     * @return una MarcaCochePojo encontrada
+     */
     @Override
     public Optional<CarBrandPojo> getCarBrand(Integer id) {
-        try {
-
-        } catch (Exception e){
-
+        return iCarBrandCrudRepository.findById(id).
+                map(carBrandEntity -> iCarBrandMapper.toMarcaCochePojo(carBrandEntity));
         }
-    }
 
     /**
      * Guardar una MarcaCochePojo y para la BD una MarcaCocheEntity
@@ -49,6 +55,6 @@ public class CarBrandRepository implements ICarBrandRepository {
 
     @Override
     public void delete(Integer idCarBrand) {
-
+        iCarBrandCrudRepository.deleteById(idCarBrand);
     }
 }
