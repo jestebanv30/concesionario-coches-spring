@@ -47,8 +47,8 @@ public class CarBrandRepository implements ICarBrandRepository {
      */
     @Override
     public Optional<CarBrandPojo> getCarBrand(Integer id) {
-        return iCardCarBrandCrudRepository.findById(id)
-                .map(iCardBrandMapper::toMarcaCochePojo);
+        return iCardCarBrandCrudRepository.findById(id).
+                map(iCardBrandMapper::toMarcaCochePojo);
         // carBrandEntity -> iCardBrandMapper.toMarcaCochePojo(carBrandEntity) - LAMBDA
         // iCardBrandMapper::toMarcaCochePojo - Metodo por referencia
     }
