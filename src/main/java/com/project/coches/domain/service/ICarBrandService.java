@@ -21,6 +21,13 @@ public interface ICarBrandService {
     Optional<CarBrandPojo> getCarBrand(Integer id);
 
     /**
+     * Busca una descripción existente de marca coche
+     * @param description descripcion a buscar
+     * @return descripcion encontrada
+     */
+    Optional<CarBrandPojo> getCarBrandByDescription(String description);
+
+    /**
      * Guarda una marca de coche
      * @param carBrandPojoNew MarcaCochePojo nueva
      * @return Guarda una MarcaCochePojo

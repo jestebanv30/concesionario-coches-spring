@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,31 +24,52 @@ public class CarBrandService implements ICarBrandService{
 
     @Override
     public Optional<CarBrandPojo> getCarBrand(Integer id) {
+
         return iCarBrandRepository.getCarBrand(id);
     }
 
     @Override
+    public Optional<CarBrandPojo> getCarBrandByDescription(String description) {
+        return iCarBrandRepository.getCarBrandByDescription(description);
+    }
+
+    @Override
     public CarBrandPojo save(CarBrandPojo carBrandPojoNew) {
-        return iCarBrandRepository.save(carBrandPojoNew);
+
+        Optional<CarBrandPojo> existingCarBrand = getCarBrandByDescription(carBrandPojoNew.getDescription());
+
+        if (existingCarBrand.isPresent()) {
+            return null;
+        } else {
+            return iCarBrandRepository.save(carBrandPojoNew);
+        }
     }
 
     @Override
     public Optional<CarBrandPojo> update(CarBrandPojo carBrandPojo) {
 
-        if (iCarBrandRepository.getCarBrand(carBrandPojo.getId()).isEmpty()) {
-            return Optional.empty();
-        }
+        Optional<CarBrandPojo> existingDescription = getCarBrandByDescription(carBrandPojo.getDescription());
 
-        return Optional.of(iCarBrandRepository.save(carBrandPojo));
+        Optional<CarBrandPojo> existingID = getCarBrand(carBrandPojo.getId());
+
+        if (existingID.isEmpty()) {
+            return Optional.empty();
+        } else if (existingDescription.isPresent()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(iCarBrandRepository.save(carBrandPojo));
+        }
     }
 
     @Override
     public boolean delete(Integer idCarBrand) {
-        try {
-            iCarBrandRepository.delete(idCarBrand);
-            return true;
-        } catch (Exception e){
+
+        if (iCarBrandRepository.getCarBrand(idCarBrand).isEmpty()){
             return false;
         }
+
+        iCarBrandRepository.delete(idCarBrand);
+        return true;
+
     }
 }

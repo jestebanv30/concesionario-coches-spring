@@ -43,6 +43,17 @@ public class CarBrandRepository implements ICarBrandRepository {
         }
 
     /**
+     * Busca una descripción existente de marca coche
+     * @param description descripcion a buscar
+     * @return descripcion encontrada
+     */
+    @Override
+    public Optional<CarBrandPojo> getCarBrandByDescription(String description) {
+        return iCarBrandCrudRepository.findByDescriptionIgnoreCase(description)
+                .map(carBrandEntity -> iCarBrandMapper.toMarcaCochePojo(carBrandEntity));
+    }
+
+    /**
      * Guardar una MarcaCochePojo y para la BD una MarcaCocheEntity
      * @param carBrandPojoNew MarcaCochePojo nueva
      * @return MarcaCochePojo guardada

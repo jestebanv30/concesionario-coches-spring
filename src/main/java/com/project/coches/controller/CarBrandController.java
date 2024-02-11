@@ -1,12 +1,9 @@
 package com.project.coches.controller;
 
 import com.project.coches.domain.pojo.CarBrandPojo;
-import com.project.coches.domain.repository.ICarBrandRepository;
 import com.project.coches.domain.service.ICarBrandService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,18 +27,36 @@ public class CarBrandController {
         return ResponseEntity.of(iCarBrandService.getCarBrand(id));
     }
 
+    @GetMapping(path = "/description-{description}")
+    public ResponseEntity<CarBrandPojo> getCarBrandByDescription(@PathVariable String description){
+        return ResponseEntity.of(iCarBrandService.getCarBrandByDescription(description));
+    }
+
     @PostMapping
-    public ResponseEntity<CarBrandPojo> save(CarBrandPojo carBrandPojoNew){
-        return ResponseEntity.status(HttpStatus.OK).body(iCarBrandService.save(carBrandPojoNew));
+    public ResponseEntity<CarBrandPojo> save(@RequestBody CarBrandPojo carBrandPojoNew){
+        try {
+
+            CarBrandPojo savedCarBrandPojo = iCarBrandService.save(carBrandPojoNew);
+
+            if (savedCarBrandPojo == null){
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .build();
+            }
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(savedCarBrandPojo);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PutMapping
-    public ResponseEntity<CarBrandPojo> update(CarBrandPojo carBrandPojo) {
+    public ResponseEntity<CarBrandPojo> update(@RequestBody CarBrandPojo carBrandPojo) {
         return ResponseEntity.of(iCarBrandService.update(carBrandPojo));
     }
 
-    public ResponseEntity<CarBrandPojo> delete(Integer id){
-        return ResponseEntity.status(HttpStatus.OK).body(iCarBrandService.delete(id) ?
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<CarBrandPojo> delete(@PathVariable Integer id){
+        return new ResponseEntity<>(this.iCarBrandService.delete(id)
+                ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
