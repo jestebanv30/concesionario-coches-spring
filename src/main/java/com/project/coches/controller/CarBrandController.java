@@ -1,6 +1,6 @@
 package com.project.coches.controller;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.domain.service.ICarBrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CarBrandController {
      * @return HttpCode Ok con lista de marcas coche
      */
     @GetMapping()
-    public ResponseEntity<List<CarBrandPojo>> getAll(){
+    public ResponseEntity<List<CarBrandDto>> getAll(){
         return ResponseEntity.ok(iCarBrandService.getAll());
         // return ResponseEntity.status(HttpStatus.OK)
         //        .body(iCarBrandService.getAll()); - ALTERNATIVA es más completa en términos de HTTPSTATUS
@@ -42,21 +42,21 @@ public class CarBrandController {
      * @return HttpCode Ok si la encuentra, HttpCode Not Found de lo contrario = .of
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CarBrandPojo> getCarBrand(@PathVariable Integer id){
+    public ResponseEntity<CarBrandDto> getCarBrand(@PathVariable Integer id){
      return ResponseEntity.of(iCarBrandService.getCarBrand(id));
     }
 
     /**
      * Crea una nueva marca coche
-     * @param carBrandPojoNew marca coche a crear
+     * @param carBrandDtoNew marca coche a crear
      * @return HttpCode Created si la guarda correctamente, HttpCode BadRequest de lo contrario
      */
     @PostMapping
-    public ResponseEntity<CarBrandPojo> save(@RequestBody CarBrandPojo carBrandPojoNew){
+    public ResponseEntity<CarBrandDto> save(@RequestBody CarBrandDto carBrandDtoNew){
 
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(iCarBrandService.save(carBrandPojoNew));
+                    .body(iCarBrandService.save(carBrandDtoNew));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -64,12 +64,12 @@ public class CarBrandController {
 
     /**
      * Actualiza una marca coche
-     * @param carBrandPojoUpdate Marca coche actualizada
+     * @param carBrandDtoUpdate Marca coche actualizada
      * @return HttpCode Ok si la actualiza correctamente
      */
     @PutMapping
-    public ResponseEntity<CarBrandPojo> update(@RequestBody CarBrandPojo carBrandPojoUpdate){
-        return ResponseEntity.of(iCarBrandService.update(carBrandPojoUpdate));
+    public ResponseEntity<CarBrandDto> update(@RequestBody CarBrandDto carBrandDtoUpdate){
+        return ResponseEntity.of(iCarBrandService.update(carBrandDtoUpdate));
     }
 
     /**
@@ -78,7 +78,7 @@ public class CarBrandController {
      * @return HttpCode Ok si la elimina, HttpCode Not Found si no Existe
      */
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<CarBrandPojo> delete(@PathVariable Integer id){
+    public ResponseEntity<CarBrandDto> delete(@PathVariable Integer id){
         return new ResponseEntity<>(this.iCarBrandService.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

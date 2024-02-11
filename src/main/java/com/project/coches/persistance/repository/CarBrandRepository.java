@@ -1,6 +1,6 @@
 package com.project.coches.persistance.repository;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.domain.repository.ICarBrandRepository;
 import com.project.coches.persistance.entity.CarBrandEntity;
 import com.project.coches.persistance.mapper.ICarBrandMapper;
@@ -33,7 +33,7 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return lista de marcacochepojos
      */
     @Override
-    public List<CarBrandPojo> getAll() {
+    public List<CarBrandDto> getAll() {
         return iCardBrandMapper.toMarcasCochePojo(iCardCarBrandCrudRepository.findAll());
     }
 
@@ -46,7 +46,7 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return un CarBrandPojo
      */
     @Override
-    public Optional<CarBrandPojo> getCarBrand(Integer id) {
+    public Optional<CarBrandDto> getCarBrand(Integer id) {
         return iCardCarBrandCrudRepository.findById(id).
                 map(iCardBrandMapper::toMarcaCochePojo);
         // carBrandEntity -> iCardBrandMapper.toMarcaCochePojo(carBrandEntity) - LAMBDA
@@ -59,7 +59,7 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return MarcaCochePojo guardada
      */
     @Override
-    public CarBrandPojo save(CarBrandPojo newCarBrand) {
+    public CarBrandDto save(CarBrandDto newCarBrand) {
         CarBrandEntity carBrandEntity = iCardBrandMapper.toMarcaCocheEntity(newCarBrand);
         return iCardBrandMapper.toMarcaCochePojo(iCardCarBrandCrudRepository.save(carBrandEntity));
     }

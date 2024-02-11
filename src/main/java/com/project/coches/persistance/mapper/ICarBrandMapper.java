@@ -1,6 +1,6 @@
 package com.project.coches.persistance.mapper;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.persistance.entity.CarBrandEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -21,7 +21,7 @@ public interface ICarBrandMapper {
      */
     @Mapping(source = "id", target = "id")
     @Mapping(source = "description", target = "description")
-    CarBrandPojo toMarcaCochePojo(CarBrandEntity marcaEntity);
+    CarBrandDto toMarcaCochePojo(CarBrandEntity marcaEntity);
 
     /**
      * Convierte el Pojo a Entidad de MarcaCoche
@@ -29,14 +29,14 @@ public interface ICarBrandMapper {
      * @return Entidad
      */
     @InheritInverseConfiguration
-    CarBrandEntity toMarcaCocheEntity(CarBrandPojo marcaPojo);
+    CarBrandEntity toMarcaCocheEntity(CarBrandDto marcaPojo);
 
     /**
      * Retorna una lista de marcasCoche transformada a pojo de una lista de entidades
      * @param marcasCocheEntity Lista Entidades a transformar
      * @return Lista Pojo
      */
-    List<CarBrandPojo> toMarcasCochePojo(List<CarBrandEntity> marcasCocheEntity);
+    List<CarBrandDto> toMarcasCochePojo(List<CarBrandEntity> marcasCocheEntity);
 
 
 }
