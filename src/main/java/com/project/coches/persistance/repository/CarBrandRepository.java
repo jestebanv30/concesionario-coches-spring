@@ -34,7 +34,7 @@ public class CarBrandRepository implements ICarBrandRepository {
      */
     @Override
     public List<CarBrandDto> getAll() {
-        return iCardBrandMapper.toMarcasCochePojo(iCardCarBrandCrudRepository.findAll());
+        return iCardBrandMapper.toMarcasCocheDto(iCardCarBrandCrudRepository.findAll());
     }
 
     /**
@@ -48,9 +48,9 @@ public class CarBrandRepository implements ICarBrandRepository {
     @Override
     public Optional<CarBrandDto> getCarBrand(Integer id) {
         return iCardCarBrandCrudRepository.findById(id).
-                map(iCardBrandMapper::toMarcaCochePojo);
-        // carBrandEntity -> iCardBrandMapper.toMarcaCochePojo(carBrandEntity) - LAMBDA
-        // iCardBrandMapper::toMarcaCochePojo - Metodo por referencia
+                map(iCardBrandMapper::toMarcaCocheDto);
+        // carBrandEntity -> iCardBrandMapper.toMarcaCocheDto(carBrandEntity) - LAMBDA
+        // iCardBrandMapper::toMarcaCocheDto - Metodo por referencia
     }
 
     /**
@@ -61,7 +61,7 @@ public class CarBrandRepository implements ICarBrandRepository {
     @Override
     public CarBrandDto save(CarBrandDto newCarBrand) {
         CarBrandEntity carBrandEntity = iCardBrandMapper.toMarcaCocheEntity(newCarBrand);
-        return iCardBrandMapper.toMarcaCochePojo(iCardCarBrandCrudRepository.save(carBrandEntity));
+        return iCardBrandMapper.toMarcaCocheDto(iCardCarBrandCrudRepository.save(carBrandEntity));
     }
 
 
