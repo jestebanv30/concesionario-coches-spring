@@ -24,6 +24,7 @@ public class CarBrandRepository implements ICarBrandRepository {
 
     /**
      * Lista de MarcasCochesPojo a través de listar MarcasCochesEntity
+     *
      * @return Lista de MarcasCochesPojo
      */
     @Override
@@ -33,6 +34,7 @@ public class CarBrandRepository implements ICarBrandRepository {
 
     /**
      * Busca una marca coche Entity y la transformo en Pojo
+     *
      * @param id Marca de coche a buscar
      * @return una MarcaCochePojo encontrada
      */
@@ -40,10 +42,11 @@ public class CarBrandRepository implements ICarBrandRepository {
     public Optional<CarBrandPojo> getCarBrand(Integer id) {
         return iCarBrandCrudRepository.findById(id).
                 map(carBrandEntity -> iCarBrandMapper.toMarcaCochePojo(carBrandEntity));
-        }
+    }
 
     /**
      * Busca una descripción existente de marca coche
+     *
      * @param description descripcion a buscar
      * @return descripcion encontrada
      */
@@ -55,6 +58,7 @@ public class CarBrandRepository implements ICarBrandRepository {
 
     /**
      * Guardar una MarcaCochePojo y para la BD una MarcaCocheEntity
+     *
      * @param carBrandPojoNew MarcaCochePojo nueva
      * @return MarcaCochePojo guardada
      */

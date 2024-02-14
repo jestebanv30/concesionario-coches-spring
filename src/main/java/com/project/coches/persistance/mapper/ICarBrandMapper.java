@@ -16,6 +16,7 @@ public interface ICarBrandMapper {
 
     /**
      * Mappea la entidad a pojo de MarcaCoche
+     *
      * @param marcaEntity Entidad a convertir
      * @return Pojo
      */
@@ -25,6 +26,7 @@ public interface ICarBrandMapper {
 
     /**
      * Convierte el Pojo a Entidad de MarcaCoche
+     *
      * @param marcaPojo Pojo a convertir
      * @return Entidad
      */
@@ -33,6 +35,7 @@ public interface ICarBrandMapper {
 
     /**
      * Retorna una lista de marcasCoche transformada a pojo de una lista de entidades
+     *
      * @param marcasCocheEntity Lista Entidades a transformar
      * @return Lista Pojo
      */

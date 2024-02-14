@@ -13,6 +13,7 @@ public interface ICarBrandCrudRepository extends JpaRepository<CarBrandEntity, I
      * En este caso, findByDescriptionIgnoreCase se traduce en una consulta que
      * busca una entidad de tipo CarBrandEntity donde el atributo description
      * coincide con el valor proporcionado (ignorando mayúsculas y minúsculas).
+     *
      * @param description descripcion a buscar
      * @return descripcion encontrada
      */

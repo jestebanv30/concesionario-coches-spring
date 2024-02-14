@@ -2,18 +2,15 @@ package com.project.coches.domain.service;
 
 import com.project.coches.domain.pojo.CarBrandPojo;
 import com.project.coches.domain.repository.ICarBrandRepository;
-import com.project.coches.persistance.repository.CarBrandRepository;
-import com.project.coches.persistance.repository.ICarBrandCrudRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class CarBrandService implements ICarBrandService{
+public class CarBrandService implements ICarBrandService {
 
     private final ICarBrandRepository iCarBrandRepository;
 
@@ -64,7 +61,7 @@ public class CarBrandService implements ICarBrandService{
     @Override
     public boolean delete(Integer idCarBrand) {
 
-        if (iCarBrandRepository.getCarBrand(idCarBrand).isEmpty()){
+        if (iCarBrandRepository.getCarBrand(idCarBrand).isEmpty()) {
             return false;
         }
 

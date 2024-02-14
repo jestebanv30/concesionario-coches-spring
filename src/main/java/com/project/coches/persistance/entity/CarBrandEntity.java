@@ -7,7 +7,8 @@ import lombok.Setter;
 /**
  * Entidad de marca coche (directamente de bd)
  */
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "marca_coche")
 public class CarBrandEntity {

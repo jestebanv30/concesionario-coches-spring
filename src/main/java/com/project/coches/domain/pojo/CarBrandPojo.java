@@ -7,7 +7,8 @@ import lombok.Setter;
 /**
  * Pojo (DTO objeto plano en java) de marca coche
  */
-@Getter @Setter
+@Getter
+@Setter
 public class CarBrandPojo {
 
     /**
