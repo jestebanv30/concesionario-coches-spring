@@ -1,4 +1,4 @@
-package com.project.coches.domain.service;
+package com.project.coches.domain.useCase;
 
 import com.project.coches.domain.dto.CustomerDto;
 import com.project.coches.domain.dto.ResponseCurstomerDto;
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Interfaz de servicio cliente
  */
-public interface ICustomerService {
+public interface ICustomerUseCase {
 
 
     List<CustomerDto> getAll();

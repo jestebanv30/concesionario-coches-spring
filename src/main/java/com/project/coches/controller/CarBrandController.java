@@ -1,7 +1,7 @@
 package com.project.coches.controller;
 
 import com.project.coches.domain.dto.CarBrandDto;
-import com.project.coches.domain.service.ICarBrandService;
+import com.project.coches.domain.useCase.ICarBrandUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class CarBrandController {
     /**
      * Servicio de marca coche
      */
-    private final ICarBrandService iCarBrandService;
+    private final ICarBrandUseCase iCarBrandUseCase;
 
     /**
      * Devuelve lista de marcas coche
@@ -29,7 +29,7 @@ public class CarBrandController {
      */
     @GetMapping()
     public ResponseEntity<List<CarBrandDto>> getAll(){
-        return ResponseEntity.ok(iCarBrandService.getAll());
+        return ResponseEntity.ok(iCarBrandUseCase.getAll());
         // return ResponseEntity.status(HttpStatus.OK)
         //        .body(iCarBrandService.getAll()); - ALTERNATIVA es más completa en términos de HTTPSTATUS
 
@@ -43,7 +43,7 @@ public class CarBrandController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<CarBrandDto> getCarBrand(@PathVariable Integer id){
-     return ResponseEntity.of(iCarBrandService.getCarBrand(id));
+     return ResponseEntity.of(iCarBrandUseCase.getCarBrand(id));
     }
 
     /**
@@ -56,7 +56,7 @@ public class CarBrandController {
 
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(iCarBrandService.save(carBrandDtoNew));
+                    .body(iCarBrandUseCase.save(carBrandDtoNew));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -69,7 +69,7 @@ public class CarBrandController {
      */
     @PutMapping
     public ResponseEntity<CarBrandDto> update(@RequestBody CarBrandDto carBrandDtoUpdate){
-        return ResponseEntity.of(iCarBrandService.update(carBrandDtoUpdate));
+        return ResponseEntity.of(iCarBrandUseCase.update(carBrandDtoUpdate));
     }
 
     /**
@@ -79,6 +79,6 @@ public class CarBrandController {
      */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<CarBrandDto> delete(@PathVariable Integer id){
-        return new ResponseEntity<>(this.iCarBrandService.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(this.iCarBrandUseCase.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

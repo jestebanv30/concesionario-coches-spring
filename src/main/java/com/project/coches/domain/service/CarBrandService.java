@@ -2,6 +2,7 @@ package com.project.coches.domain.service;
 
 import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.domain.repository.ICarBrandRepository;
+import com.project.coches.domain.useCase.ICarBrandUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 @Service
-public class CarBrandService implements ICarBrandService {
+public class CarBrandService implements ICarBrandUseCase {
 
     /**
      * Repositorio de marca coche
