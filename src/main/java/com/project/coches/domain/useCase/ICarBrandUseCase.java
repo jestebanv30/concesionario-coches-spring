@@ -1,17 +1,17 @@
-package com.project.coches.domain.service;
+package com.project.coches.domain.useCase;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ICarBrandService {
+public interface ICarBrandUseCase {
     /**
      * Obtiene lista de marcas coches pojo
      *
      * @return lista de MarcasCochesPojo
      */
-    List<CarBrandPojo> getAll();
+    List<CarBrandDto> getAll();
 
     /**
      * Optional (en caso de encontrar devuelve la MarcaCoche y
@@ -20,7 +20,7 @@ public interface ICarBrandService {
      * @param id Marca de coche a buscar
      * @return Marca de coche encontrada
      */
-    Optional<CarBrandPojo> getCarBrand(Integer id);
+    Optional<CarBrandDto> getCarBrand(Integer id);
 
     /**
      * Busca una descripción existente de marca coche
@@ -28,17 +28,17 @@ public interface ICarBrandService {
      * @param description descripcion a buscar
      * @return descripcion encontrada
      */
-    Optional<CarBrandPojo> getCarBrandByDescription(String description);
+    Optional<CarBrandDto> getCarBrandByDescription(String description);
 
     /**
      * Guarda una marca de coche
      *
-     * @param carBrandPojoNew MarcaCochePojo nueva
+     * @param carBrandDtoNew MarcaCochePojo nueva
      * @return Guarda una MarcaCochePojo
      */
-    CarBrandPojo save(CarBrandPojo carBrandPojoNew);
+    CarBrandDto save(CarBrandDto carBrandDtoNew);
 
-    Optional<CarBrandPojo> update(CarBrandPojo carBrandPojo);
+    Optional<CarBrandDto> update(CarBrandDto carBrandDto);
 
     /**
      * Elimina una marca de coche

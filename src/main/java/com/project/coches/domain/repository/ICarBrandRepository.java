@@ -1,6 +1,6 @@
 package com.project.coches.domain.repository;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public interface ICarBrandRepository {
      * Obtiene lista de marcas coches pojo
      * @return lista de MarcasCochesPojo
      */
-    List<CarBrandPojo> getAll();
+    List<CarBrandDto> getAll();
 
     /**
      * Optional (en caso de encontrar devuelve la MarcaCoche y
@@ -22,20 +22,20 @@ public interface ICarBrandRepository {
      * @param id Marca de coche a buscar
      * @return Marca de coche encontrada
      */
-    Optional<CarBrandPojo> getCarBrand(Integer id);
+    Optional<CarBrandDto> getCarBrand(Integer id);
 
     /**
      * Busca una descripción existente de marca coche
      * @param description descripcion a buscar
      * @return descripcion encontrada
      */
-    Optional<CarBrandPojo> getCarBrandByDescription(String description);
+    Optional<CarBrandDto> getCarBrandByDescription(String description);
     /**
      * Guarda una marca de coche
-     * @param carBrandPojoNew MarcaCochePojo nueva
+     * @param carBrandDtoNew MarcaCochePojo nueva
      * @return Guarda una MarcaCochePojo
      */
-    CarBrandPojo save(CarBrandPojo carBrandPojoNew);
+    CarBrandDto save(CarBrandDto carBrandDtoNew);
 
     /**
      * Elimina una marca de coche

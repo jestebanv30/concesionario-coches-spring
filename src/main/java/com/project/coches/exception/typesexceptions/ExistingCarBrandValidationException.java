@@ -1,4 +1,4 @@
-package com.project.coches.exception;
+package com.project.coches.exception.typesexceptions;
 
 public class ExistingCarBrandValidationException extends RuntimeException {
 

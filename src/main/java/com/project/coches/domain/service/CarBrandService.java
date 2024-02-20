@@ -1,7 +1,10 @@
 package com.project.coches.domain.service;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.domain.repository.ICarBrandRepository;
+import com.project.coches.domain.useCase.ICarBrandUseCase;
+import com.project.coches.exception.typesexceptions.ExistingCarBrandValidationException;
+import com.project.coches.exception.typesexceptions.ValidationOfNonExistentCarBrand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,51 +13,53 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class CarBrandService implements ICarBrandService {
+public class CarBrandService implements ICarBrandUseCase {
 
     private final ICarBrandRepository iCarBrandRepository;
 
     @Override
-    public List<CarBrandPojo> getAll() {
+    public List<CarBrandDto> getAll() {
         return iCarBrandRepository.getAll();
     }
 
     @Override
-    public Optional<CarBrandPojo> getCarBrand(Integer id) {
+    public Optional<CarBrandDto> getCarBrand(Integer id) {
+
+        if (iCarBrandRepository.getCarBrand(id).isEmpty()){
+            throw new ValidationOfNonExistentCarBrand();
+        }
 
         return iCarBrandRepository.getCarBrand(id);
     }
 
     @Override
-    public Optional<CarBrandPojo> getCarBrandByDescription(String description) {
+    public Optional<CarBrandDto> getCarBrandByDescription(String description) {
+
+        if (iCarBrandRepository.getCarBrandByDescription(description).isEmpty()){
+            throw new ValidationOfNonExistentCarBrand();
+        }
+
         return iCarBrandRepository.getCarBrandByDescription(description);
     }
 
     @Override
-    public CarBrandPojo save(CarBrandPojo carBrandPojoNew) {
+    public CarBrandDto save(CarBrandDto carBrandDtoNew) {
 
-        Optional<CarBrandPojo> existingCarBrand = getCarBrandByDescription(carBrandPojoNew.getDescription());
-
-        if (existingCarBrand.isPresent()) {
-            return null;
-        } else {
-            return iCarBrandRepository.save(carBrandPojoNew);
+        if (iCarBrandRepository.getCarBrandByDescription(carBrandDtoNew.getDescription()).isPresent()) {
+            throw new ExistingCarBrandValidationException();
         }
+        return iCarBrandRepository.save(carBrandDtoNew);
     }
 
     @Override
-    public Optional<CarBrandPojo> update(CarBrandPojo carBrandPojo) {
+    public Optional<CarBrandDto> update(CarBrandDto carBrandDto) {
 
-        Optional<CarBrandPojo> existingDescription = getCarBrandByDescription(carBrandPojo.getDescription());
-
-        Optional<CarBrandPojo> existingID = getCarBrand(carBrandPojo.getId());
-
-        if (existingID.isEmpty()) {
-            return Optional.empty();
-        } else if (existingDescription.isPresent()) {
-            return Optional.empty();
+        if (iCarBrandRepository.getCarBrand(carBrandDto.getId()).isEmpty()) {
+            throw new ValidationOfNonExistentCarBrand();
+        } else if (iCarBrandRepository.getCarBrandByDescription(carBrandDto.getDescription()).isPresent()) {
+            throw new ExistingCarBrandValidationException();
         } else {
-            return Optional.of(iCarBrandRepository.save(carBrandPojo));
+            return Optional.of(iCarBrandRepository.save(carBrandDto));
         }
     }
 
@@ -62,7 +67,7 @@ public class CarBrandService implements ICarBrandService {
     public boolean delete(Integer idCarBrand) {
 
         if (iCarBrandRepository.getCarBrand(idCarBrand).isEmpty()) {
-            return false;
+            throw new ValidationOfNonExistentCarBrand();
         }
 
         iCarBrandRepository.delete(idCarBrand);

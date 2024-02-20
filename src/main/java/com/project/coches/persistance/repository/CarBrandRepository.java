@@ -1,7 +1,8 @@
 package com.project.coches.persistance.repository;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
+import com.project.coches.domain.dto.CarBrandDto;
 import com.project.coches.domain.repository.ICarBrandRepository;
+import com.project.coches.persistance.crud.ICarBrandCrudRepository;
 import com.project.coches.persistance.entity.CarBrandEntity;
 import com.project.coches.persistance.mapper.ICarBrandMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return Lista de MarcasCochesPojo
      */
     @Override
-    public List<CarBrandPojo> getAll() {
-        return iCarBrandMapper.toMarcasCochePojo(iCarBrandCrudRepository.findAll());
+    public List<CarBrandDto> getAll() {
+        return iCarBrandMapper.toMarcasCocheDto(iCarBrandCrudRepository.findAll());
     }
 
     /**
@@ -39,9 +40,9 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return una MarcaCochePojo encontrada
      */
     @Override
-    public Optional<CarBrandPojo> getCarBrand(Integer id) {
+    public Optional<CarBrandDto> getCarBrand(Integer id) {
         return iCarBrandCrudRepository.findById(id).
-                map(carBrandEntity -> iCarBrandMapper.toMarcaCochePojo(carBrandEntity));
+                map(iCarBrandMapper::toMarcaCocheDto);
     }
 
     /**
@@ -51,21 +52,21 @@ public class CarBrandRepository implements ICarBrandRepository {
      * @return descripcion encontrada
      */
     @Override
-    public Optional<CarBrandPojo> getCarBrandByDescription(String description) {
+    public Optional<CarBrandDto> getCarBrandByDescription(String description) {
         return iCarBrandCrudRepository.findByDescriptionIgnoreCase(description)
-                .map(carBrandEntity -> iCarBrandMapper.toMarcaCochePojo(carBrandEntity));
+                .map(iCarBrandMapper::toMarcaCocheDto);
     }
 
     /**
      * Guardar una MarcaCochePojo y para la BD una MarcaCocheEntity
      *
-     * @param carBrandPojoNew MarcaCochePojo nueva
+     * @param carBrandDtoNew MarcaCochePojo nueva
      * @return MarcaCochePojo guardada
      */
     @Override
-    public CarBrandPojo save(CarBrandPojo carBrandPojoNew) {
-        CarBrandEntity carBrandEntity = iCarBrandMapper.toMarcaCocheEntity(carBrandPojoNew);
-        return iCarBrandMapper.toMarcaCochePojo(iCarBrandCrudRepository.save(carBrandEntity));
+    public CarBrandDto save(CarBrandDto carBrandDtoNew) {
+        CarBrandEntity carBrandEntity = iCarBrandMapper.toMarcaCocheEntity(carBrandDtoNew);
+        return iCarBrandMapper.toMarcaCocheDto(iCarBrandCrudRepository.save(carBrandEntity));
     }
 
     @Override

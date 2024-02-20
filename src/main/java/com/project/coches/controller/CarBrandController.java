@@ -1,7 +1,7 @@
 package com.project.coches.controller;
 
-import com.project.coches.domain.pojo.CarBrandPojo;
-import com.project.coches.domain.service.ICarBrandService;
+import com.project.coches.domain.dto.CarBrandDto;
+import com.project.coches.domain.useCase.ICarBrandUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,48 +14,35 @@ import java.util.List;
 @RequestMapping(path = "/car-brands")
 public class CarBrandController {
 
-    private final ICarBrandService iCarBrandService;
+    private final ICarBrandUseCase iCarBrandUseCase;
 
     @GetMapping
-    public ResponseEntity<List<CarBrandPojo>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(iCarBrandService.getAll());
+    public ResponseEntity<List<CarBrandDto>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(iCarBrandUseCase.getAll());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CarBrandPojo> getCarBrand(@PathVariable Integer id) {
-        return ResponseEntity.of(iCarBrandService.getCarBrand(id));
+    public ResponseEntity<CarBrandDto> getCarBrand(@PathVariable Integer id) {
+        return ResponseEntity.of(iCarBrandUseCase.getCarBrand(id));
     }
 
     @GetMapping(path = "/description-{description}")
-    public ResponseEntity<CarBrandPojo> getCarBrandByDescription(@PathVariable String description) {
-        return ResponseEntity.of(iCarBrandService.getCarBrandByDescription(description));
+    public ResponseEntity<CarBrandDto> getCarBrandByDescription(@PathVariable String description) {
+        return ResponseEntity.of(iCarBrandUseCase.getCarBrandByDescription(description));
     }
 
     @PostMapping
-    public ResponseEntity<CarBrandPojo> save(@RequestBody CarBrandPojo carBrandPojoNew) {
-        try {
-
-            CarBrandPojo savedCarBrandPojo = iCarBrandService.save(carBrandPojoNew);
-
-            if (savedCarBrandPojo == null) {
-                return ResponseEntity.status(HttpStatus.FOUND)
-                        .build();
-            }
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(savedCarBrandPojo);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    public ResponseEntity<CarBrandDto> save(@RequestBody CarBrandDto carBrandDtoNew) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(iCarBrandUseCase.save(carBrandDtoNew));
     }
 
     @PutMapping
-    public ResponseEntity<CarBrandPojo> update(@RequestBody CarBrandPojo carBrandPojo) {
-        return ResponseEntity.of(iCarBrandService.update(carBrandPojo));
+    public ResponseEntity<CarBrandDto> update(@RequestBody CarBrandDto carBrandDto) {
+        return ResponseEntity.of(iCarBrandUseCase.update(carBrandDto));
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<CarBrandPojo> delete(@PathVariable Integer id) {
-        return new ResponseEntity<>(this.iCarBrandService.delete(id)
-                ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<CarBrandDto> delete(@PathVariable Integer id) {
+        return new ResponseEntity<>(this.iCarBrandUseCase.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
