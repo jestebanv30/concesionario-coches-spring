@@ -6,16 +6,23 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Entidad de coche
+ */
 @Getter
 @Setter
 @Entity
 @Table(name = "coches")
 public class CarEntity {
 
+    /**
+     * Atributos de coche, en ID se genera
+     * automático
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_coche")
-    private Integer code_car;
+    private Integer codeCar;
 
     @Column(name = "marca_coche_id")
     private Integer carBrandId;
@@ -50,7 +57,7 @@ public class CarEntity {
     private Integer numberSeat;
 
     @Column(name = "traccion")
-    private Integer traction;
+    private String traction;
 
     @Column(name = "direccion")
     private String steering;
@@ -61,10 +68,19 @@ public class CarEntity {
     @Column(name = "ruta_imagen")
     private String imagePath;
 
+    private Integer stock;
+
+    /**
+     * Relación M:N con marca coche (muchos coches pueden estar asociados a una marca)
+     * no se inserta ni se actualiza, solo se referencia la marca existente
+     */
     @ManyToOne
     @JoinColumn(name = "marca_coche_id", insertable=false, updatable=false)
     private CarBrandEntity carBrandEntity;
 
+    /**
+     * Relación N:M con coches_compras, un coche puede estar en muchas compras (Stock)
+     */
     @OneToMany(mappedBy = "carEntity")
     private List<CarPurchaseEntity> carPurchaseEntities;
 }

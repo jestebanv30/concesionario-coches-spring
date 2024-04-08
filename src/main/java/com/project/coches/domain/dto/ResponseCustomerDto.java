@@ -4,9 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+/**
+ * DTO de cliente para responder con la contraseña
+ */
+@Getter
+@Setter
 @AllArgsConstructor
 public class ResponseCustomerDto {
+
+    /**
+     * Atributo de ResponseCustomer
+     */
 
     private String password;
 }

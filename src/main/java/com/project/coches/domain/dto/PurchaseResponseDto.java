@@ -6,9 +6,16 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * DTO para responder compra
+ */
 @Getter
 @Setter
 public class PurchaseResponseDto {
+
+    /**
+     * Atributos de compra response
+     */
 
     private Integer numberBill;
 
@@ -20,6 +27,6 @@ public class PurchaseResponseDto {
 
     private String paymentMethod;
 
-    private List<CarPurchaseResponseDto> carsPurchaseResponseDto;
+    private List<CarPurchaseResponseDto> carsPurchase;
 
 }

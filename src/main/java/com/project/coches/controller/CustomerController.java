@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador (endpoints) de cliente
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/customers")
@@ -18,7 +21,7 @@ public class CustomerController {
     private final ICustomerUseCase iCustomerUseCase;
 
     @GetMapping
-    public ResponseEntity<List<CustomerDto>> getAll(){
+    public ResponseEntity<List<CustomerDto>> getAll() {
         return ResponseEntity.ok().body(iCustomerUseCase.getAll());
     }
 

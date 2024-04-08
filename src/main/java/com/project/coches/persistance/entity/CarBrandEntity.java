@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Entidad de marca coche (directamente de bd)
+ * Entidad de marca coche
  */
 @Getter
 @Setter
@@ -26,6 +26,10 @@ public class CarBrandEntity {
     @Column(name = "descripcion")
     private String description;
 
+    /**
+     * Relación N:M con coches, orphanRemoval = true, significa que puedo eliminar
+     * una marca de coche aunque tenga coches asociados a ella.
+     */
     @OneToMany(mappedBy = "carBrandEntity", orphanRemoval = true)
     private List<CarEntity> carEntities;
 }

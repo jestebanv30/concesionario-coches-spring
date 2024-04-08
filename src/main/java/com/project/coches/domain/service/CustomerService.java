@@ -5,18 +5,25 @@ import com.project.coches.domain.dto.ResponseCustomerDto;
 import com.project.coches.domain.repository.ICustomerRepository;
 import com.project.coches.domain.useCase.ICustomerUseCase;
 import com.project.coches.exception.typesexceptions.*;
+import com.project.coches.security.Roles;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Servicio de cliente
+ */
 @RequiredArgsConstructor
 @Service
 public class CustomerService implements ICustomerUseCase {
 
     private final ICustomerRepository iCustomerRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<CustomerDto> getAll() {
@@ -45,6 +52,7 @@ public class CustomerService implements ICustomerUseCase {
         return iCustomerRepository.getCustomerByEmail(email);
     }
 
+
     @Override
     public ResponseCustomerDto save(CustomerDto customerDtoNew) {
 
@@ -67,10 +75,11 @@ public class CustomerService implements ICustomerUseCase {
         }
 
         String passwordGenerate = generateRandomPassword(8);
-        customerDtoNew.setPassword(passwordGenerate);
+        customerDtoNew.setPassword(passwordEncoder.encode(passwordGenerate));
         customerDtoNew.setActive(1);
-
+        customerDtoNew.setRol(Roles.CUSTOMER);
         iCustomerRepository.save(customerDtoNew);
+
         return new ResponseCustomerDto(passwordGenerate);
     }
 
@@ -87,8 +96,11 @@ public class CustomerService implements ICustomerUseCase {
 
         if (existingEmail.isPresent() && !existingEmail.get().getCardId().equals(customerDtoNew.getCardId())) {
             throw new ExistingEmailCustomerException();
-        } 
-            return Optional.of(iCustomerRepository.save(customerDtoNew));
+        }
+
+        customerDtoNew.setPassword(passwordEncoder.encode(customerDtoNew.getPassword()));
+
+        return Optional.of(iCustomerRepository.save(customerDtoNew));
 
     }
 
@@ -104,6 +116,11 @@ public class CustomerService implements ICustomerUseCase {
         return true;
     }
 
+    /**
+     * Generador de contraseña
+     * @param len cantidad de caracteres de la contraseña
+     * @return contraseña generada
+     */
     private String generateRandomPassword(int len) {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefhijklmnopqrstuvwxyz0123456789";
 

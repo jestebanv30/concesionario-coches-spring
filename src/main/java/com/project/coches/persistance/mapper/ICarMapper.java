@@ -7,11 +7,16 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
+/**
+ * Mapper que transforma obj de Coche a Dto o entidades
+ */
 @Mapper(componentModel = "spring")
 public interface ICarMapper {
 
+    @Mapping(source = "carBrandEntity.description", target = "carBrandDescription")
     CarDto toCarDto (CarEntity carEntity);
 
+    @Mapping(target = "carPurchaseEntities", ignore = true)
     @Mapping(target = "carBrandEntity", ignore = true)
     CarEntity toCarEntity (CarDto carDto);
 

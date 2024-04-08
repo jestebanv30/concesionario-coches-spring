@@ -5,18 +5,18 @@ import com.project.coches.domain.dto.CarBrandDto;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz de caso de uso para marca coche
+ */
 public interface ICarBrandUseCase {
     /**
-     * Obtiene lista de marcas coches pojo
-     *
-     * @return lista de MarcasCochesPojo
+     * Obtiene lista de marcas coches
+     * @return lista de marca coche
      */
     List<CarBrandDto> getAll();
 
     /**
-     * Optional (en caso de encontrar devuelve la MarcaCoche y
-     * en caso de que no, evita el null)
-     *
+     * Buscar una marca de coche por ID
      * @param id Marca de coche a buscar
      * @return Marca de coche encontrada
      */
@@ -24,7 +24,6 @@ public interface ICarBrandUseCase {
 
     /**
      * Busca una descripción existente de marca coche
-     *
      * @param description descripcion a buscar
      * @return descripcion encontrada
      */
@@ -32,17 +31,20 @@ public interface ICarBrandUseCase {
 
     /**
      * Guarda una marca de coche
-     *
      * @param carBrandDtoNew MarcaCochePojo nueva
      * @return Guarda una MarcaCochePojo
      */
     CarBrandDto save(CarBrandDto carBrandDtoNew);
 
+    /**
+     * Actualiza una marca coche
+     * @param carBrandDto marca coche a actualizar
+     * @return marca coche actualizada
+     */
     Optional<CarBrandDto> update(CarBrandDto carBrandDto);
 
     /**
-     * Elimina una marca de coche
-     *
+     * Elimina una marca coche
      * @param idCarBrand Marca de coche a eliminar
      */
     boolean delete(Integer idCarBrand);

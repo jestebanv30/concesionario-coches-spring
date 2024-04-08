@@ -6,11 +6,17 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Entidad de cliente
+ */
 @Getter @Setter
 @Entity
 @Table(name = "clientes")
 public class CustomerEntity {
 
+    /**
+     * Atributos de cliente
+     */
     @Id
     @Column(name = "cedula")
     private String cardId;
@@ -30,6 +36,11 @@ public class CustomerEntity {
     @Column(name = "contrasenia")
     private String password;
 
+    private String rol;
+
+    /**
+     * Relación N:M con compras, un cliente puede tener muchas compras
+     */
     @OneToMany(mappedBy = "customerEntity")
     private List<PurchaseEntity> purchaseEntities;
 

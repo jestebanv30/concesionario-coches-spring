@@ -6,8 +6,13 @@ import lombok.Setter;
 /**
  * Dto de cliente
  */
-@Getter @Setter
+@Getter
+@Setter
 public class CustomerDto {
+
+    /**
+     * Atributos de cliente
+     */
 
     private String cardId;
 
@@ -20,4 +25,19 @@ public class CustomerDto {
     private Integer active;
 
     private String password;
+
+    private String rol;
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "cardId='" + cardId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", numberCellphone=" + numberCellphone +
+                ", active=" + active +
+                ", password='" + password + '\'' +
+                ", rol='" + rol + '\'' +
+                '}';
+    }
 }

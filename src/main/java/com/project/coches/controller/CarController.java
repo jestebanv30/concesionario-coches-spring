@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador (endpoints) de coche
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/cars")

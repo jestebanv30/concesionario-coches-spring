@@ -3,13 +3,22 @@ package com.project.coches.domain.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * DTO de coche
+ */
 @Getter
 @Setter
 public class CarDto {
 
-    private Integer code_car;
+    /**
+     * Atributos de cocheDto
+     */
+
+    private Integer codeCar;
 
     private Integer carBrandId;
+
+    private String carBrandDescription;
 
     private String reference;
 
@@ -31,12 +40,14 @@ public class CarDto {
 
     private Integer numberSeat;
 
-    private Integer traction;
+    private String traction;
 
     private String steering;
 
     private String category;
 
     private String imagePath;
+
+    private Integer stock;
 
 }
