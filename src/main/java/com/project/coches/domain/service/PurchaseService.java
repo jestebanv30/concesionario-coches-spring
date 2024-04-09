@@ -43,6 +43,7 @@ public class PurchaseService implements IPurchaseUseCase {
         return purchaseResponseDto;
     }
 
+    /*
     @Override
     public PurchaseBillResponseDto save(PurchaseRequestDto purchaseRequestDto) {
 
@@ -57,4 +58,29 @@ public class PurchaseService implements IPurchaseUseCase {
 
         return purchaseBillResponseDto;
     }
+     */
+
+    @Override
+    public PurchaseBillResponseDto save(PurchaseRequestDto purchaseRequestDto) {
+
+        PurchaseBillResponseDto purchaseBillResponseDto = iPurchaseRepository.save(purchaseRequestDto);
+
+        purchaseRequestDto.getCarsPurchase().forEach(carPurchase -> {
+            CarDto carActual = iCarRepository.getCarById(carPurchase.getCodeCar())
+                    .orElseThrow(() -> new IllegalArgumentException("Carro no encontrado"));
+
+            int cantidadAComprar = carPurchase.getQuantity();
+            int stockDisponible = carActual.getStock();
+
+            if (cantidadAComprar <= stockDisponible) {
+                carActual.setStock(stockDisponible - cantidadAComprar);
+                iCarRepository.save(carActual);
+            } else {
+                throw new IllegalArgumentException("Stock insuficiente para comprar la cantidad especificada");
+            }
+        });
+
+        return purchaseBillResponseDto;
+    }
+
 }

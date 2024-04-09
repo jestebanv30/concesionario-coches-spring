@@ -134,10 +134,11 @@ public class CustomerService implements ICustomerUseCase {
         }
 
         // Validar número celular
-        if (customerDto.getNumberCellphone() == null || customerDto.getNumberCellphone().toString().length() != 10) {
+        if (customerDto.getNumberCellphone() == null || !isValidNumber(customerDto.getNumberCellphone())) {
             throw new IllegalArgumentException("El número celular debe ser un valor numérico de 10 dígitos");
         }
 
+        //Validar formato de contraseña
         if (!customerDto.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
             throw new EmailValidationException();
@@ -154,5 +155,15 @@ public class CustomerService implements ICustomerUseCase {
         if (existingEmail.isPresent()) {
             throw new ExistingEmailCustomerException();
         }
+    }
+
+    // Función auxiliar para verificar si un Double es un número válido de 10 dígitos
+    private boolean isValidNumber(Double number) {
+        if (number == null) {
+            return false;
+        }
+
+        long longValue = Math.round(number);
+        return String.valueOf(longValue).length() == 10;
     }
 }

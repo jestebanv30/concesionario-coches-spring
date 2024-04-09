@@ -48,6 +48,12 @@ public class CarBrandService implements ICarBrandUseCase {
     @Override
     public CarBrandDto save(CarBrandDto carBrandDtoNew) {
 
+        // Validar la longitud de la descripción
+        String description = carBrandDtoNew.getDescription();
+        if (description == null || description.length() < 3 || description.length() > 15) {
+            throw new IllegalArgumentException("La descripción debe tener entre 3 y 15 caracteres.");
+        }
+
         if (iCarBrandRepository.getCarBrandByDescription(carBrandDtoNew.getDescription()).isPresent()) {
             throw new ExistingCarBrandValidationException();
         }
