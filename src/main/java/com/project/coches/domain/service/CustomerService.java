@@ -52,27 +52,10 @@ public class CustomerService implements ICustomerUseCase {
         return iCustomerRepository.getCustomerByEmail(email);
     }
 
-
     @Override
     public ResponseCustomerDto save(CustomerDto customerDtoNew) {
 
-        if (!customerDtoNew.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
-
-            throw new EmailValidationException();
-        }
-
-        Optional<CustomerDto> existingId = iCustomerRepository.getCustomerByCardID(customerDtoNew.getCardId());
-
-        if (existingId.isPresent()) {
-            throw new ExistingCardIDCustomerException();
-        }
-
-        Optional<CustomerDto> existingEmail = iCustomerRepository.getCustomerByEmail(customerDtoNew.getEmail());
-
-        if (existingEmail.isPresent()) {
-            throw new ExistingEmailCustomerException();
-        }
+        validateCustomerDto(customerDtoNew);
 
         String passwordGenerate = generateRandomPassword(8);
         customerDtoNew.setPassword(passwordEncoder.encode(passwordGenerate));
@@ -132,5 +115,44 @@ public class CustomerService implements ICustomerUseCase {
             sb.append(chars.charAt(randomIndex));
         }
         return sb.toString();
+    }
+
+    private void validateCustomerDto(CustomerDto customerDto){
+        // Validar cédula
+        if (customerDto.getCardId() == null || customerDto.getCardId().length() < 8 || customerDto.getCardId().length() > 12) {
+            throw new IllegalArgumentException("La cédula debe tener un valor numérico mínimo de 8 y máximo de 12 dígitos");
+        }
+
+        // Validar nombre completo
+        if (customerDto.getFullName() == null || customerDto.getFullName().length() <= 10 || customerDto.getFullName().length() >= 40) {
+            throw new IllegalArgumentException("El nombre completo debe ser una cadena de caracteres mayor a 10 y menor a 40");
+        }
+
+        // Validar correo
+        if (customerDto.getEmail() == null || customerDto.getEmail().length() <= 6 || customerDto.getEmail().length() > 25) {
+            throw new IllegalArgumentException("El correo debe ser una cadena de caracteres mayor a 6 y menor o igual a 25");
+        }
+
+        // Validar número celular
+        if (customerDto.getNumberCellphone() == null || customerDto.getNumberCellphone().toString().length() != 10) {
+            throw new IllegalArgumentException("El número celular debe ser un valor numérico de 10 dígitos");
+        }
+
+        if (!customerDto.getEmail().matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+            throw new EmailValidationException();
+        }
+
+        Optional<CustomerDto> existingId = iCustomerRepository.getCustomerByCardID(customerDto.getCardId());
+
+        if (existingId.isPresent()) {
+            throw new ExistingCardIDCustomerException();
+        }
+
+        Optional<CustomerDto> existingEmail = iCustomerRepository.getCustomerByEmail(customerDto.getEmail());
+
+        if (existingEmail.isPresent()) {
+            throw new ExistingEmailCustomerException();
+        }
     }
 }
