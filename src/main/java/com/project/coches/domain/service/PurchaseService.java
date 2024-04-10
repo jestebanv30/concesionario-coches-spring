@@ -11,6 +11,8 @@ import com.project.coches.exception.typesexceptions.PurchaseNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -63,6 +65,8 @@ public class PurchaseService implements IPurchaseUseCase {
     @Override
     public PurchaseBillResponseDto save(PurchaseRequestDto purchaseRequestDto) {
 
+        validatePurchase(purchaseRequestDto);
+
         PurchaseBillResponseDto purchaseBillResponseDto = iPurchaseRepository.save(purchaseRequestDto);
 
         purchaseRequestDto.getCarsPurchase().forEach(carPurchase -> {
@@ -83,4 +87,24 @@ public class PurchaseService implements IPurchaseUseCase {
         return purchaseBillResponseDto;
     }
 
+    private void validatePurchase(PurchaseRequestDto purchaseRequestDto){
+
+        List<String> validPayment = Arrays.asList("Efectivo", "Transferencia", "PSE");
+
+        // Validar fecha
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (purchaseRequestDto.getDate() == null || purchaseRequestDto.getDate().isAfter(currentDate)) {
+            throw new IllegalArgumentException("La fecha debe ser menor o igual a la fecha actual.");
+        }
+
+        // Validar total
+        if (purchaseRequestDto.getTotal() == null || purchaseRequestDto.getTotal() <= 0) {
+            throw new IllegalArgumentException("El total debe ser un número positivo mayor a 0.");
+        }
+
+        // Validar metodos de pago
+        if (purchaseRequestDto.getPaymentMethod() == null || !validPayment.contains(purchaseRequestDto.getPaymentMethod())) {
+            throw new IllegalArgumentException("El medio de pago debe ser uno de: Efectivo, Transferencia, PSE.");
+        }
+    }
 }

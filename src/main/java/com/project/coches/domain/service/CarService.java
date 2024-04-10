@@ -4,7 +4,6 @@ import com.project.coches.domain.dto.CarDto;
 import com.project.coches.domain.repository.ICarRepository;
 import com.project.coches.domain.useCase.ICarUseCase;
 import com.project.coches.exception.typesexceptions.NoExistCarException;
-import com.project.coches.exception.typesexceptions.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -90,6 +89,7 @@ public class CarService implements ICarUseCase {
         if (existingCar.isEmpty()) {
             throw new NoExistCarException();
         }
+        validateCarDto(carDtoNew);
 
         return Optional.of(iCarRepository.save(carDtoNew));
     }

@@ -81,6 +81,8 @@ public class CustomerService implements ICustomerUseCase {
             throw new ExistingEmailCustomerException();
         }
 
+        validateCustomerDto(customerDtoNew);
+
         customerDtoNew.setPassword(passwordEncoder.encode(customerDtoNew.getPassword()));
 
         return Optional.of(iCustomerRepository.save(customerDtoNew));

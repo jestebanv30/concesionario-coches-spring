@@ -48,15 +48,8 @@ public class CarBrandService implements ICarBrandUseCase {
     @Override
     public CarBrandDto save(CarBrandDto carBrandDtoNew) {
 
-        // Validar la longitud de la descripción
-        String description = carBrandDtoNew.getDescription();
-        if (description == null || description.length() < 3 || description.length() > 15) {
-            throw new IllegalArgumentException("La descripción debe tener entre 3 y 15 caracteres.");
-        }
+        validateDescriptionBrand(carBrandDtoNew);
 
-        if (iCarBrandRepository.getCarBrandByDescription(carBrandDtoNew.getDescription()).isPresent()) {
-            throw new ExistingCarBrandValidationException();
-        }
         return iCarBrandRepository.save(carBrandDtoNew);
     }
 
@@ -65,11 +58,11 @@ public class CarBrandService implements ICarBrandUseCase {
 
         if (iCarBrandRepository.getCarBrand(carBrandDto.getId()).isEmpty()) {
             throw new ValidationOfNonExistentCarBrand();
-        } else if (iCarBrandRepository.getCarBrandByDescription(carBrandDto.getDescription()).isPresent()) {
-            throw new ExistingCarBrandValidationException();
-        } else {
-            return Optional.of(iCarBrandRepository.save(carBrandDto));
         }
+
+        validateDescriptionBrand(carBrandDto);
+
+        return Optional.of(iCarBrandRepository.save(carBrandDto));
     }
 
     @Override
@@ -81,6 +74,19 @@ public class CarBrandService implements ICarBrandUseCase {
 
         iCarBrandRepository.delete(idCarBrand);
         return true;
+    }
 
+    private void validateDescriptionBrand(CarBrandDto carBrandDto){
+
+        String description = carBrandDto.getDescription();
+
+        // Validar la longitud de la descripción
+        if (description == null || description.length() < 3 || description.length() > 15) {
+            throw new IllegalArgumentException("La descripción debe tener entre 3 y 15 caracteres.");
+        }
+        // Validar que la nueva marca de coche sea única
+        if (iCarBrandRepository.getCarBrandByDescription(carBrandDto.getDescription()).isPresent()) {
+            throw new ExistingCarBrandValidationException();
+        }
     }
 }
