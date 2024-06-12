@@ -50,6 +50,7 @@ public class JwtAuthenticationProvider {
                 .withClaim("fullName", customerDtoJwt.getFullName())
                 .withClaim("email", customerDtoJwt.getEmail())
                 .withClaim("numberCellPhone", String.valueOf(customerDtoJwt.getNumberCellphone()))
+                .withClaim("rol", customerDtoJwt.getRol())
                 .withIssuedAt(now) //Fecha de creacion
                 .withExpiresAt(validity) //Fecha de expiracion
                 .sign(algorithm); //Firma criptográficamente del JWT
