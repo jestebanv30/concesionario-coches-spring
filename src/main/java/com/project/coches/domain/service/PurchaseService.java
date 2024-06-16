@@ -92,10 +92,10 @@ public class PurchaseService implements IPurchaseUseCase {
         List<String> validPayment = Arrays.asList("Efectivo", "Transferencia", "PSE");
 
         // Validar fecha
-        LocalDateTime currentDate = LocalDateTime.now();
+        /*LocalDateTime currentDate = LocalDateTime.now();
         if (purchaseRequestDto.getDate() == null || purchaseRequestDto.getDate().isAfter(currentDate)) {
             throw new IllegalArgumentException("La fecha debe ser menor o igual a la fecha actual.");
-        }
+        }*/
 
         // Validar total
         if (purchaseRequestDto.getTotal() == null || purchaseRequestDto.getTotal() <= 0) {
