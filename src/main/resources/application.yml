@@ -1,0 +1,60 @@
+  # Configuraciones globales
+  spring:
+    profiles:
+      active: dev
+
+  server:
+    servlet:
+      context-path: /api
+
+  jwt:
+    secret:
+      key: LLAVE_SECRETA
+
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+---
+  # Configuraciones para el perfil dev
+  spring:
+    config:
+      activate:
+        on-profile: dev
+
+    datasource:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/concesionario_coches
+      username: postgres
+      password: 12345
+
+---
+  # Configuraciones para el perfil prod
+  spring:
+    config:
+      activate:
+        on-profile: prod
+
+    cloud:
+      azure:
+        keyvault:
+          secret:
+            property-source-enabled: true
+            property-sources:
+              - endpoint: https://keys-springboot-db.vault.azure.net/
+                profile:
+                  tenant-id: 41353d1e-2028-4a01-9f61-3761d8af2071
+                  credential:
+                    client-id: 9b900559-e1d4-454b-8c85-8fcd32444729
+                    client-secret: xAC8Q~m320uWyr3oa-j_WH3FMU~ZvDowdddCocGD
+
+    datasource:
+      url: ${spring-data-source-url}
+      # username: ${spring-datasource-username}
+      # password: ${spring-datasource-password}
