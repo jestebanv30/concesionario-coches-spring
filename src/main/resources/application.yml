@@ -46,15 +46,15 @@
         keyvault:
           secret:
             property-source-enabled: true
-            property-sources:
-              - endpoint: https://keys-springboot-db.vault.azure.net/
-                profile:
-                  tenant-id: 41353d1e-2028-4a01-9f61-3761d8af2071
-                  credential:
-                    client-id: 9b900559-e1d4-454b-8c85-8fcd32444729
-                    client-secret: xAC8Q~m320uWyr3oa-j_WH3FMU~ZvDowdddCocGD
+            property-sources[0]:
+              endpoint: https://keys-springboot-psql.vault.azure.net/
+              profile:
+                tenant-id: f0647ab4-1320-4aef-a592-6b6b5876fcf4
+              credential:
+                client-id: 1a657991-5c33-48ea-9783-22263cdaaf01
+                client-secret: NiI8Q~vcLiLDquyi~bPcWWCUJLv_stM1MOLpjc0l
 
     datasource:
-      url: ${spring-data-source-url}
-      # username: ${spring-datasource-username}
-      # password: ${spring-datasource-password}
+      url: ${spring-datasource-url}
+      username: ${spring-datasource-username}
+      password: ${spring-datasource-password}
