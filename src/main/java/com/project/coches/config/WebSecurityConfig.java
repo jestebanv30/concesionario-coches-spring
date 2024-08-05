@@ -41,7 +41,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults())//Configuración predeterminada para el manejo de dominios externos. ej: carga de imágenes, etc. (Hay que permitirlo en caso tal se requiera, aunque subir la img desde el local, y una vez que el programa inicie, suministrarla con la ruta permitida
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) //Usa la configuracion de cors definida .cors(withDefaults())
                 .exceptionHandling(customizer -> customizer.accessDeniedHandler(accessDeniedHandlerException))// Si no tienes permiso, deniega el acceso y manda la excepcion
                 //.exceptionHandling().accessDeniedHandler(accessDeniedHandlerException) EN DESUSO DESDE SPRING 6.1
                 .csrf(AbstractHttpConfigurer::disable)
