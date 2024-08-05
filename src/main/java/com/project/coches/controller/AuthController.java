@@ -21,19 +21,16 @@ public class AuthController {
 
     private final ICustomerUseCase iCustomerUseCase;
 
-    @CrossOrigin(origins = "https://concesionario-coches-front.vercel.app")
     @PostMapping(path = "/register")
     public ResponseEntity<ResponseCustomerDto> register(@RequestBody CustomerDto customerDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(iCustomerUseCase.save(customerDto));
     }
 
-    @CrossOrigin(origins = "https://concesionario-coches-front.vercel.app")
     @PostMapping(path = "/sign-in")
     public ResponseEntity<JwtResponseDto> signIn(@RequestBody AuthCustomerDto authCustomerDto) {
         return ResponseEntity.ok(iAuthUseCase.signIn(authCustomerDto));
     }
 
-    @CrossOrigin(origins = "https://concesionario-coches-front.vercel.app")
     @PostMapping(path = "/sign-out")
     public ResponseEntity<JwtResponseDto> signOut(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String token) {
         return ResponseEntity.ok(iAuthUseCase.signOut(token));
