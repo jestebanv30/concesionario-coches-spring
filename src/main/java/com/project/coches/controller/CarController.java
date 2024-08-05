@@ -19,6 +19,7 @@ public class CarController {
 
     private final ICarUseCase iCarUseCase;
 
+    @CrossOrigin(origins = "https://concesionario-coches-front.vercel.app")
     @GetMapping
     public ResponseEntity<List<CarDto>> getAll() {
         return ResponseEntity.ok().body(iCarUseCase.getAll());
