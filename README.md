@@ -17,7 +17,7 @@ Principales características:
 
 ## Visuales
 
-Video miniatura de Youtube (por grabar).
+Video miniatura de Youtube (por subir).
 
 ## Información Despliegue Azure 📦
 
